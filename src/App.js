@@ -1,23 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./index.css";
+import Container from "./Container";
+import Form from "./Form";
 
 function App() {
+  const [amount, setAmount] = useState("");
+  const [currency, setCurrency] = useState("");
+  const [result, setResult] = useState("");
+
+  const EUR = 4.3;
+  const USD = 5;
+
+  const calculateResult = (event) => {
+    event.preventDefault();
+
+    let calculatedResult;
+
+    switch (currency) {
+      case "EUR":
+        calculatedResult = amount / EUR;
+        break;
+      case "USD":
+        calculatedResult = amount / USD;
+        break;
+      default:
+        alert("Nieznana waluta");
+        return;
+    }
+
+    setResult(`${amount} PLN = ${calculatedResult.toFixed(2)} ${currency}`);
+  };
+
+  const handleAmountChange = (event) => {
+    setAmount(event.target.value);
+  };
+
+  const handleCurrencyChange = (event) => {
+    setCurrency(event.target.value);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload. heh
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Container>
+        <Form
+          amount={amount}
+          currency={currency}
+          result={result}
+          handleAmountChange={handleAmountChange}
+          handleCurrencyChange={handleCurrencyChange}
+          onSubmit={calculateResult}
+          onReset={() => {
+            setAmount("");
+            setCurrency("");
+            setResult("");
+          }}
+        />
+      </Container>
     </div>
   );
 }
