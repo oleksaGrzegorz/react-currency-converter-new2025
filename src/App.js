@@ -11,6 +11,8 @@ function App() {
   const EUR = 4.3;
   const USD = 5;
 
+  //test
+
   const calculateResult = (event) => {
     event.preventDefault();
 
